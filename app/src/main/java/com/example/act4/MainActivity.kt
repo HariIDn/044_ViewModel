@@ -6,8 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
@@ -112,6 +114,10 @@ fun TampilForm(cobaViewModel: CbViewModel = viewModel()){
         Text(text = stringResource(R.string.submit),
             fontSize = 16.sp)
     }
+    Spacer(modifier = Modifier.height(100.dp))
+    Hasil(namenya = cobaViewModel.namaUsr,
+        phonenya = cobaViewModel.noTlp,
+        kindnya = cobaViewModel.jenisKl)
 }
 
 @Composable
