@@ -17,13 +17,21 @@ class CbViewModel : ViewModel() {
         private set
     var jenisKl : String by mutableStateOf("")
         private set
+    var jenisSt : String by mutableStateOf("")
+        private set
+    var eMail : String by mutableStateOf("")
+        private set
+    var Tempat : String by mutableStateOf("")
+        private set
     private val _uiState = MutableStateFlow(DataForm())
     val uiState: StateFlow<DataForm> = _uiState.asStateFlow()
 
-    fun BacaData(nm:String,tlp:String,jk:String){
-        namaUsr=nm;
-        noTlp=tlp;
+    fun BacaData(jk: String, jst: String, meil: String, almt:String){
+
         jenisKl=jk;
+        jenisSt=jst;
+        eMail=meil;
+        Tempat=almt;
     }
     fun setJenisK(pilihJK: String){
         _uiState.update{currentState -> currentState.copy(sex = pilihJK)}

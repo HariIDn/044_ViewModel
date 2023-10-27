@@ -6,16 +6,15 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -47,7 +46,6 @@ import com.example.act4.Data.DataObjek.jenis
 import com.example.act4.Data.DataObjek.sts
 import com.example.act4.ui.theme.Act4Theme
 import com.example.act4.ui.theme.CbViewModel
-import java.lang.StackWalker.Option
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,7 +82,8 @@ fun Layar() {
 fun TampilForm(cobaViewModel: CbViewModel = viewModel()){
     var textNama by remember { mutableStateOf("") }
     var textTlp by remember { mutableStateOf("") }
-
+    var textEmail by remember { mutableStateOf("") }
+    var textAlamat by remember { mutableStateOf("") }
 
     val context = LocalContext.current
     val dataForm: DataForm
@@ -101,10 +100,10 @@ fun TampilForm(cobaViewModel: CbViewModel = viewModel()){
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
-                .padding(start = 120.dp, top = 10.dp))
-
-
+                .padding(start = 120.dp, top = 10.dp)
+        )
     }
+    Divider(Modifier.fillMaxWidth())
     Text(text = "Create Your Account",
         fontWeight = FontWeight.Bold,
         modifier = Modifier.padding(5.dp))
@@ -128,23 +127,40 @@ fun TampilForm(cobaViewModel: CbViewModel = viewModel()){
             textTlp = it
         }
     )
+    OutlinedTextField(value = textEmail,
+        singleLine = true,
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = "Email")},
+        onValueChange = {
+            textEmail = it
+        })
 
     PilihJenis(
         options = jenis.map {id -> context.resources.getString(id)},
         onSelectionChanged = {cobaViewModel.setJenisK(it)})
     PilihStatus(option = sts.map { id -> context.resources.getString(id) },
         onSelectionChanged = {cobaViewModel.setStatusnkh(it)})
+    OutlinedTextField(value = textEmail,
+        singleLine = true,
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = "Alamat")},
+        onValueChange = {
+            textAlamat = it
+        })
     Button(onClick = {
-        cobaViewModel.BacaData(textNama, textTlp, dataForm.sex)
+        cobaViewModel.BacaData(dataForm.sex, dataForm.status, textEmail,textAlamat)
     }
     ) {
         Text(text = stringResource(R.string.submit),
             fontSize = 16.sp)
     }
-    Spacer(modifier = Modifier.height(100.dp))
-    Hasil(namenya = cobaViewModel.namaUsr,
-        phonenya = cobaViewModel.noTlp,
-        kindnya = cobaViewModel.jenisKl)
+
+    Hasil(statnya = cobaViewModel.jenisSt,
+        mailnya = cobaViewModel.eMail,
+        kindnya = cobaViewModel.jenisKl,
+        adrsnya = cobaViewModel.Tempat)
 }
 
 @Composable
@@ -184,7 +200,7 @@ fun PilihJenis(
     }
 }
 @Composable
-fun Hasil(namenya: String, phonenya: String, kindnya: String){
+fun Hasil(statnya: String, mailnya: String, kindnya: String, adrsnya: String){
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -192,17 +208,23 @@ fun Hasil(namenya: String, phonenya: String, kindnya: String){
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        Text(text = "Nama: " + namenya,
-            modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 4.dp)
-        )
-        Text(text = "Telepon: " + phonenya,
+
+        Text(text = "Jenis Kelamin: " + kindnya,
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 5.dp)
         )
-        Text(text = "Jenis Kelamin: " + kindnya,
+        Text(text = "Status: " + statnya,
             modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 5.dp))
+                .padding(horizontal = 10.dp, vertical = 5.dp)
+        )
+        Text(text = "Alamat: " + adrsnya,
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 5.dp)
+        )
+        Text(text = "Email: " + mailnya,
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 5.dp)
+        )
     }
 }
 @Composable
