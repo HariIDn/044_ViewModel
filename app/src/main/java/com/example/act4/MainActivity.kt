@@ -148,7 +148,9 @@ fun PilihJenis(
     onSelectionChanged: (String) -> Unit = {}
 ){
     var selectedValue by rememberSaveable { mutableStateOf("") }
-
+    Text(text = "Jenis Kelamin",
+        modifier = Modifier
+            .fillMaxWidth())
     Row(modifier = Modifier
         .padding(10.dp)
         .fillMaxWidth()) {
