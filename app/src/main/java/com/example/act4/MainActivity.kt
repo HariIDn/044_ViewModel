@@ -31,9 +31,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -62,7 +64,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Layar(modifier: Modifier = Modifier) {
+fun Layar() {
     Card(modifier = Modifier,
         elevation = CardDefaults.cardElevation(defaultElevation = 15.dp)) {
         Column(verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -85,11 +87,25 @@ fun TampilForm(cobaViewModel: CbViewModel = viewModel()){
     val uiState by cobaViewModel.uiState.collectAsState()
     dataForm = uiState
 
+    Row(modifier = Modifier
+        .fillMaxWidth()
+        .padding(bottom = 7.dp)){
+        Button(onClick = {},
+            modifier = Modifier) {
+
+        }
+
+
+    }
+    Text(text = "Create Your Account",
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier.padding(5.dp))
+
     OutlinedTextField(value = textNama,
         singleLine = true,
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = "Nama Lengkap")},
+        label = { Text(text = "Username")},
         onValueChange = {
             textNama = it
         }
@@ -99,11 +115,12 @@ fun TampilForm(cobaViewModel: CbViewModel = viewModel()){
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth(),
-        label = { Text(text = "Nomor Telepon")},
+        label = { Text(text = "Telepon")},
         onValueChange = {
             textTlp = it
         }
     )
+
     PilihJenis(
         options = jenis.map {id -> context.resources.getString(id)},
         onSelectionChanged = {cobaViewModel.setJenisK(it)})
@@ -126,7 +143,10 @@ fun PilihJenis(
     onSelectionChanged: (String) -> Unit = {}
 ){
     var selectedValue by rememberSaveable { mutableStateOf("") }
-    Column(modifier = Modifier.padding(16.dp)) {
+
+    Column(modifier = Modifier
+        .padding(10.dp)
+        .fillMaxWidth()) {
         options.forEach{item ->
             Row(
                 modifier = Modifier.selectable(
@@ -136,7 +156,8 @@ fun PilihJenis(
                         onSelectionChanged(item)
                     }
                 ),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = CenterVertically,
+
             ) {
                 RadioButton(selected = selectedValue == item,
                     onClick = {
