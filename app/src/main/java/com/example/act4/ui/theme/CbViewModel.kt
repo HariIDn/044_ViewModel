@@ -28,4 +28,7 @@ class CbViewModel : ViewModel() {
     fun setJenisK(pilihJK: String){
         _uiState.update{currentState -> currentState.copy(sex = pilihJK)}
     }
+    fun setStatusnkh(pilihSts: String){
+        _uiState.update{currentState -> currentState.copy(status = pilihSts)}
+    }
 }

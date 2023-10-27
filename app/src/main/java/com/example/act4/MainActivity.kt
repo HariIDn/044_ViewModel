@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.act4.Data.DataForm
 import com.example.act4.Data.DataObjek.jenis
+import com.example.act4.Data.DataObjek.sts
 import com.example.act4.ui.theme.Act4Theme
 import com.example.act4.ui.theme.CbViewModel
 import java.lang.StackWalker.Option
@@ -83,6 +84,7 @@ fun Layar() {
 fun TampilForm(cobaViewModel: CbViewModel = viewModel()){
     var textNama by remember { mutableStateOf("") }
     var textTlp by remember { mutableStateOf("") }
+
 
     val context = LocalContext.current
     val dataForm: DataForm
@@ -130,6 +132,8 @@ fun TampilForm(cobaViewModel: CbViewModel = viewModel()){
     PilihJenis(
         options = jenis.map {id -> context.resources.getString(id)},
         onSelectionChanged = {cobaViewModel.setJenisK(it)})
+    PilihStatus(option = sts.map { id -> context.resources.getString(id) },
+        onSelectionChanged = {cobaViewModel.setStatusnkh(it)})
     Button(onClick = {
         cobaViewModel.BacaData(textNama, textTlp, dataForm.sex)
     }
@@ -206,7 +210,32 @@ fun PilihStatus(
     option: List<String>,
     onSelectionChanged: (String) -> Unit
 ){
-
+    var selectedValue by rememberSaveable { mutableStateOf("") }
+    Text(text = "Status", modifier = Modifier
+        .fillMaxWidth())
+    Row (modifier = Modifier
+        .fillMaxWidth()){
+        option.forEach{
+            item ->
+            Row(modifier = Modifier.selectable(
+                selected = selectedValue == item,
+                onClick = {
+                    selectedValue = item
+                    onSelectionChanged(item)
+                }
+            ),
+                verticalAlignment = CenterVertically
+            ){
+                RadioButton(selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectionChanged(item)
+                    }
+                )
+                Text(text = item)
+            }
+        }
+    }
 }
 @Preview(showBackground = true)
 @Composable
