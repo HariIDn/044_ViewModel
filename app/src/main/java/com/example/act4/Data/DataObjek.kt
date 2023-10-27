@@ -7,4 +7,8 @@ object DataObjek {
         R.string.Wanita
 
     )
+    val sts = listOf(
+        R.string.blmnikah,
+        R.string.nikah
+    )
 }

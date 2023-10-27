@@ -150,7 +150,8 @@ fun PilihJenis(
     var selectedValue by rememberSaveable { mutableStateOf("") }
     Text(text = "Jenis Kelamin",
         modifier = Modifier
-            .fillMaxWidth())
+            .fillMaxWidth()
+            .padding(top = 5.dp))
     Row(modifier = Modifier
         .padding(10.dp)
         .fillMaxWidth()) {
