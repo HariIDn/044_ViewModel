@@ -149,7 +149,7 @@ fun PilihJenis(
 ){
     var selectedValue by rememberSaveable { mutableStateOf("") }
 
-    Column(modifier = Modifier
+    Row(modifier = Modifier
         .padding(10.dp)
         .fillMaxWidth()) {
         options.forEach{item ->
