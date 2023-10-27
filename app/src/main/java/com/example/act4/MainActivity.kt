@@ -46,6 +46,7 @@ import com.example.act4.Data.DataForm
 import com.example.act4.Data.DataObjek.jenis
 import com.example.act4.ui.theme.Act4Theme
 import com.example.act4.ui.theme.CbViewModel
+import java.lang.StackWalker.Option
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -153,7 +154,7 @@ fun PilihJenis(
             .fillMaxWidth()
             .padding(top = 5.dp))
     Row(modifier = Modifier
-        .padding(10.dp)
+        .padding(8.dp)
         .fillMaxWidth()) {
         options.forEach{item ->
             Row(
@@ -199,6 +200,13 @@ fun Hasil(namenya: String, phonenya: String, kindnya: String){
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 5.dp))
     }
+}
+@Composable
+fun PilihStatus(
+    option: List<String>,
+    onSelectionChanged: (String) -> Unit
+){
+
 }
 @Preview(showBackground = true)
 @Composable
